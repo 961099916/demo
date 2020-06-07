@@ -22,10 +22,10 @@ spec:
         env: dev
     spec:
       containers:
-      - name: demo
-        image: zhangjiahao0401/demo:latest
-        ports:
-        - containerPort: 8080
+        - name: demo
+          image: zhangjiahao0401/demo:latest
+          ports:
+            - containerPort: 8080
 
 
 ---
@@ -40,9 +40,9 @@ metadata:
     env: dev
 spec:
   ports:
-  - name: "8080"
-    port: 8080
-    targetPort: 8080
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
   selector:
     app: demo
     dept: omgt
@@ -55,20 +55,20 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   labels:
-     app: demo
-     dept: omgt
+    app: demo
+    dept: omgt
   name: demo-ingress
- 
+  namespace: default
 spec:
   rules:
-  - host: demo-ingress.default.192.168.1.2.xip.io
-    http:
-      paths:
-      - backend:
-          serviceName: demo-service
-          servicePort: 8080
-        path: /
+    - host: demo-ingress.default.192.168.1.2.xip.io
+      http:
+        paths:
+          - backend:
+              serviceName: demo-service
+              servicePort: 8080
+            path: /
 status:
   loadBalancer:
     ingress:
-    - ip: 192.168.1.2
+      - ip: 192.168.1.2
